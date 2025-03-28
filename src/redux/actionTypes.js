@@ -1,0 +1,17 @@
+export const CLEAN_STORE = 'CLEAN_STORE'
+// common
+export const SET_IS_LOADING = 'SET_IS_LOADING'
+
+// auth part
+
+export const COUNTRY_CODE = 'COUNTRY_CODE'
+export const ON_REGISTER = 'ON_REGISTER'
+export const ON_LOGIN = 'ON_LOGIN'
+export const SET_CUSTOMER_DATA = 'SET_CUSTOMER_DATA'
+export const ON_LOGOUT_MODAL = 'ON_LOGOUT_MODAL'
+export const LOGOUT_MODAL_DATA = 'LOGOUT_MODAL_DATA'
+export const ON_LOGOUT_ACCOUNT = 'ON_LOGOUT_ACCOUNT'
+export const VERIFY_EMAIL = 'VERIFY_EMAIL'
+export const SET_VERIFY_EMAIL = 'SET_VERIFY_EMAIL'
+export const VERIFY_OTP = 'VERIFY_OTP'
+export const CHANGE_USER_PASSWORD = 'CHANGE_USER_PASSWORD'
