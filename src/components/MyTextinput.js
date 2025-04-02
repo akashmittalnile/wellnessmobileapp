@@ -2,7 +2,7 @@ import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-nativ
 import React, { useState } from 'react'
 import { Colors, Sizes } from '../assests/style';
 
-const MyTextinput = ({ value, placeholder, secureTextEntry: initialSecureTextEntry, SvgIcon, inputStyle, maininputStyle, keyboardType, onChangeText, SvgIcon2, SvgIcon3 }) => {
+const MyTextinput = ({ value, placeholder, secureTextEntry: initialSecureTextEntry, SvgIcon, inputStyle, maininputStyle, keyboardType, onChangeText, SvgIcon2, SvgIcon3,editable }) => {
   const [secureText, setSecureText] = useState(initialSecureTextEntry);
   return (
     <View style={[styles.inputContainer, maininputStyle]}>
@@ -15,6 +15,7 @@ const MyTextinput = ({ value, placeholder, secureTextEntry: initialSecureTextEnt
         secureTextEntry={secureText}
         style={[styles.textInput, inputStyle]}
         keyboardType={keyboardType}
+        editable={editable}
       />
       
       {SvgIcon2 && SvgIcon3 && (

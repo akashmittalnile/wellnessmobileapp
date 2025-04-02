@@ -1,4 +1,4 @@
-import { ImageBackground, StyleSheet, Text, TouchableOpacity, View ,Platform} from 'react-native'
+import { ImageBackground, StyleSheet, Text, TouchableOpacity, View, Platform, Image } from 'react-native'
 import React, { useState } from 'react'
 import AuthHeader from './components/AuthHeader'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -18,17 +18,21 @@ import { navigate } from '../../navigations/NavigationServices'
 import PhoneInput from './components/PhoneInput'
 import { connect } from 'react-redux'
 import * as AuthActions from '../../redux/actions/AuthActions';
-import { formatPhoneNumber, showToastMessage } from '../../utils/service'
+import { formatPhoneNumber, imagePicker, showToastMessage } from '../../utils/service'
+import RNFetchBlob from 'rn-fetch-blob'
 
 
 
-const SignUp = ({phoneNumberCountryCode,dispatch}) => {
+const SignUp = ({ phoneNumberCountryCode, dispatch }) => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [phone, setPhone] = useState('')
-  
+  const [imageData, setImageData] = useState('')
+
+  console.log(imageData, 'check ')
+
   return (
     <ImageBackground
       source={require('../../assests/images/signinbackground.png')}
@@ -44,6 +48,7 @@ const SignUp = ({phoneNumberCountryCode,dispatch}) => {
         keyboardShouldPersistTaps="handled"
       >
         {createAccountText()}
+        {selectImage()}
         {nameEmailInputs()}
         {PhoneNumberAllInput()}
         {passwordConfirmInputs()}
@@ -54,6 +59,23 @@ const SignUp = ({phoneNumberCountryCode,dispatch}) => {
       </KeyboardAwareScrollView>
     </ImageBackground>
   )
+  function selectImage() {
+    const onPicker = async type => {
+      const response = await imagePicker({ type });
+
+      if (response) {
+        // updateState({ imageData: response[0] });
+        setImageData(response[0])
+      }
+    };
+    return (
+      <TouchableOpacity style={{ borderWidth: 1, alignSelf: 'center', height: SCREEN_WIDTH * 0.25, width: SCREEN_WIDTH * 0.25, borderRadius: 100, borderColor: Colors.primaryTheme, marginBottom: Sizes.fixPadding, overflow: 'hidden' }}
+        onPress={() => onPicker('gallary')}
+      >
+        <Image source={{ uri: imageData?.uri }} style={{ height: SCREEN_WIDTH * 0.25, width: SCREEN_WIDTH * 0.25 }} />
+      </TouchableOpacity>
+    )
+  }
   function alreadyAccont() {
     return (
       <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: Sizes.fixHorizontalPadding * 1.7 }}>
@@ -91,12 +113,12 @@ const SignUp = ({phoneNumberCountryCode,dispatch}) => {
   }
   function SignUpButton() {
     const validation = () => {
- 
-     
+
+
       const emailRegex = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b/;
       if (name === '') {
         showToastMessage({ message: 'Please enter your first name.' });
-      }  else if (email === '') {
+      } else if (email === '') {
         showToastMessage({ message: 'Please enter your email id.' });
       } else if (!emailRegex.test(email)) {
         showToastMessage({ message: 'Please enter valid email id.' });
@@ -105,21 +127,27 @@ const SignUp = ({phoneNumberCountryCode,dispatch}) => {
       } else if (confirmPassword === '') {
         showToastMessage({ message: 'Please check terms and conditions.' });
       } else {
-    
-        const payload = {
-          fullname: name,
-          email: email,
-          password: password,
-          password_confirmation: confirmPassword,
-          phone: phone,
-          role_id: 2
-        };
+        const payload = [
+          { name: 'fullname', data: name },
+          { name: 'email', data: email },
+          { name: 'password', data: password },
+          { name: 'password_confirmation', data: confirmPassword },
+          { name: 'phone', data: phone },
+          { name: 'role_id', data: 2 },
+        ];
+        if (imageData?.uri) {
+          payload.push({
+            name: 'profile_photo',
+            filename: imageData.fileName || 'profile.jpg',
+            type: imageData.type || 'image/jpeg',
+            data: RNFetchBlob.wrap(imageData.uri.replace('file://', '')),
+          });
+        } 
         dispatch(AuthActions.onRegister(payload));
-
       }
     };
     return (
-      <CustomButton name={'Sign Up'} textStyle={{ fontSize: 18, fontFamily: 'Poppins-Medium' }} style={{ backgroundColor: Colors.primaryTheme, paddingVertical: Sizes.fixPadding * 0.9, marginTop: Sizes.fixHorizontalPadding * 2 }} activeOpacity={0.6} onpress={() => validation()}/>
+      <CustomButton name={'Sign Up'} textStyle={{ fontSize: 18, fontFamily: 'Poppins-Medium' }} style={{ backgroundColor: Colors.primaryTheme, paddingVertical: Sizes.fixPadding * 0.9, marginTop: Sizes.fixHorizontalPadding * 2 }} activeOpacity={0.6} onpress={() => validation()} />
     )
   }
   function passwordConfirmInputs() {
@@ -139,7 +167,7 @@ const SignUp = ({phoneNumberCountryCode,dispatch}) => {
   function nameEmailInputs() {
     return (
       <View>
-        <MyTextinput placeholder="Full Name"  SvgIcon={USerLogo} value={name} onChangeText={(txt) => setName(txt)} />
+        <MyTextinput placeholder="Full Name" SvgIcon={USerLogo} value={name} onChangeText={(txt) => setName(txt)} />
         <MyTextinput placeholder="Email Address" SvgIcon={EmailLogo} value={email} onChangeText={(txt) => setEmail(txt)} />
       </View>
     )

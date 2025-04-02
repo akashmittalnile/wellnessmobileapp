@@ -23,13 +23,15 @@ import LogOutLogo from '../assests/Svg/Drawer/logout.svg'
 import Facebook from '../assests/Svg/Drawer/Facebook.svg'
 import Instagram from '../assests/Svg/Drawer/Instagram.svg'
 import Youtube from '../assests/Svg/Drawer/YouTube.svg'
+import StarDrawer from '../assests/Svg/Drawer/starDrawer.svg'
 import { navigate } from './NavigationServices';
+import * as Actions from '../redux/actions/CommonActions'
 
 
 
 const Drawer = createDrawerNavigator();
 
-const MyDrawer = ({ drawerProps, customerData }) => {
+const MyDrawer = ({ drawerProps, customerData ,dispatch}) => {
 
   return (
     <DrawerContentScrollView
@@ -79,6 +81,9 @@ const MyDrawer = ({ drawerProps, customerData }) => {
     )
   }
   function DrawerItemsData() {
+    const handleLogOut = () => {
+      dispatch(Actions.logOutAccount())
+    }
     return (
       <View style={{ flexDirection: 'column', justifyContent: 'center' }}>
         <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: Sizes.fixPadding * 0.7, marginBottom: Sizes.fixPadding  }}
@@ -107,11 +112,19 @@ const MyDrawer = ({ drawerProps, customerData }) => {
           <TermsCondition height={SCREEN_WIDTH * 0.05} width={SCREEN_WIDTH * 0.05} />
           <MyText title={'Terms & Conditions'} textStyle={{ fontSize: 14, color: '#112544' }} viewStyle={{ marginLeft: Sizes.fixHorizontalPadding * 0.7 }} />
         </TouchableOpacity>
+        <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: Sizes.fixPadding * 0.7, marginBottom: Sizes.fixPadding }}
+        onPress={() => navigate('rateUs')}
+        >
+          <StarDrawer height={SCREEN_WIDTH * 0.05} width={SCREEN_WIDTH * 0.05} />
+          <MyText title={'Rate Us'} textStyle={{ fontSize: 14, color: '#112544' }} viewStyle={{ marginLeft: Sizes.fixHorizontalPadding * 0.7 }} />
+        </TouchableOpacity>
         <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: Sizes.fixPadding * 0.7, marginBottom: Sizes.fixPadding }}>
           <PrivacyLogo height={SCREEN_WIDTH * 0.05} width={SCREEN_WIDTH * 0.05} />
           <MyText title={'Privacy Policy'} textStyle={{ fontSize: 14, color: '#112544' }} viewStyle={{ marginLeft: Sizes.fixHorizontalPadding * 0.7 }} />
         </TouchableOpacity>
-        <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: Sizes.fixPadding * 0.7, marginBottom: Sizes.fixPadding }}>
+        <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: Sizes.fixPadding * 0.7, marginBottom: Sizes.fixPadding }}
+        onPress={() => handleLogOut()}
+        >
           <LogOutLogo height={SCREEN_WIDTH * 0.05} width={SCREEN_WIDTH * 0.05} />
           <MyText title={'Log Out'} textStyle={{ fontSize: 14, color: '#112544' }} viewStyle={{ marginLeft: Sizes.fixHorizontalPadding * 0.7 }} />
         </TouchableOpacity>
@@ -119,7 +132,7 @@ const MyDrawer = ({ drawerProps, customerData }) => {
     )
   }
   function userInfo() {
-    const localImage = Image.resolveAssetSource(require('../assests/images/deleteImages/profileLogo.png')).uri;
+
     return (
       <View style={{
         backgroundColor: Colors.white,
@@ -140,7 +153,7 @@ const MyDrawer = ({ drawerProps, customerData }) => {
               borderRadius: 100,
             }}
             source={{
-              uri: localImage,
+              uri: customerData?.profile_photo,
               priority: FastImage.priority.high,
             }}
             resizeMode={FastImage.resizeMode.cover}
@@ -173,11 +186,11 @@ const MyDrawer = ({ drawerProps, customerData }) => {
 
 };
 
-const DrawerNavigation = ({ customerData }) => {
+const DrawerNavigation = ({ customerData,dispatch }) => {
   return (
 
     <Drawer.Navigator
-      drawerContent={props => <MyDrawer drawerProps={props} customerData={customerData} />}
+      drawerContent={props => <MyDrawer drawerProps={props} customerData={customerData} dispatch={dispatch} />}
       screenOptions={{ headerShown: false, drawerStyle: { width: SCREEN_WIDTH * 0.8 } }}>
       <Drawer.Screen name="drawer" component={BottomTabNavigation} />
     </Drawer.Navigator>
@@ -187,5 +200,5 @@ const DrawerNavigation = ({ customerData }) => {
 const mapStateToProps = state => ({
   customerData: state.common.customerData,
 })
-
-export default connect(mapStateToProps, null)(DrawerNavigation);
+const mapDispatchToProps = dispatch => ({ dispatch });
+export default connect(mapStateToProps, mapDispatchToProps)(DrawerNavigation);

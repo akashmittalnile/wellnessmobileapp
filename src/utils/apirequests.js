@@ -1,6 +1,7 @@
 import axios from 'axios'
 import RNFetchBlob from 'rn-fetch-blob'
-import { getToken } from '../config/token'
+import { getToken } from './service'
+
 
 
 export const postRequest = async ({ url = null, data = null, header = 'json' }) => {
@@ -79,6 +80,10 @@ export const blobRequest = async ({ url = null, data = null, }) => {
     try {
         const token = await getToken()
         console.log(token)
+        if (!token) {
+            console.warn('Missing authentication token');
+            return null;
+        }
         const response = await RNFetchBlob.fetch(
             'POST',
             url,
@@ -96,3 +101,21 @@ export const blobRequest = async ({ url = null, data = null, }) => {
         return null
     }
 }
+export const blobRequestWithoutToken = async ({ url = null, data = null }) => {
+    try {
+        const response = await RNFetchBlob.fetch(
+            'POST',
+            url,
+            {
+                'Content-Type': 'multipart/form-data'
+            },
+            data,
+        );
+
+        return JSON.parse(response.data);
+    } catch (e) {
+        console.log(e,);
+        return null;
+    }
+};
+

@@ -22,6 +22,8 @@ import GroupDetails from '../screens/Groups/GroupDetails';
 import TestShow from '../screens/Groups/TestShow';
 import TestTypes from '../screens/TestFile/TestTypes';
 import TestFrequency from '../screens/TestFile/TestFrequency';
+import RateUs from '../screens/termsandprivacy/RateUs';
+import AddJournal from '../screens/journal/AddJournal';
 
 const Stack = createNativeStackNavigator();
 
@@ -30,6 +32,7 @@ const StackNavigation = () => {
     <Stack.Navigator
       initialRouteName="splash"
       screenOptions={{ headerShown: false, animation: 'slide_from_right' }}>
+        <Stack.Screen name="home" component={DrawerNavigation} />
       {/* auth */}
       <Stack.Group>
         <Stack.Screen name="splash" component={Splash} />
@@ -44,7 +47,7 @@ const StackNavigation = () => {
       <Stack.Group>
         <Stack.Screen name="subscriptionplan" component={SubscriptonPlan} />
       </Stack.Group>
-      <Stack.Screen name="home" component={DrawerNavigation} />
+      
       {/* Edit profile */}
       <Stack.Group>
         <Stack.Screen name="editProfiles" component={EditProfiles} />
@@ -59,22 +62,32 @@ const StackNavigation = () => {
       <Stack.Group>
         <Stack.Screen name="notification" component={Notification} />
       </Stack.Group>
+
       {/* terms and condition */}
       <Stack.Group>
         <Stack.Screen name="termscondition" component={TermsCondition} />
+        <Stack.Screen name="rateUs" component={RateUs} />
       </Stack.Group>
+
       {/* groups */}
       <Stack.Group>
         <Stack.Screen name="creategroups" component={CreateGroups} />
         <Stack.Screen name="groupDetails" component={GroupDetails} />
         <Stack.Screen name="testShow" component={TestShow} />
       </Stack.Group>
+
       {/* Tests */}
       <Stack.Group>
         <Stack.Screen name="testTypes" component={TestTypes} />
         <Stack.Screen name="testFrequency" component={TestFrequency} />
       </Stack.Group>
 
+      {/* Journal */}
+
+      <Stack.Group>
+        <Stack.Screen name="addjournal" component={AddJournal} />
+        
+      </Stack.Group>
 
 
 

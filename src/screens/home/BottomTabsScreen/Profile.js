@@ -93,14 +93,14 @@ const Profile = ({customerData}) => {
     )
   }
   function userInfo() {
-    const localImage = Image.resolveAssetSource(require('../../../assests/images/deleteImages/profileLogo.png')).uri;
+   
     return(
         <View style={styles.userinfo}>
             <View style={{flexDirection:'row',alignItems:'center'}}>
             <FastImage
         style={styles.image}
         source={{
-          uri: localImage, 
+          uri: customerData?.profile_photo,
           priority: FastImage.priority.high,
         }}
         resizeMode={FastImage.resizeMode.cover}

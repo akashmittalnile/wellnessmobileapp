@@ -1,61 +1,25 @@
-// import { Image, StyleSheet, Text, View } from 'react-native'
-// import React, { useState } from 'react'
-// import { Colors, SCREEN_WIDTH, Sizes } from '../../../assests/style'
-// import MyText from '../../../components/MyText'
 
-// const EmojiMoodSelector = () => {
-//     const emojiMap = {
-//         '😌': 'Relaxed',
-//         '😢': 'Sad',
-//         '😃': 'Happy',
-//         '😡': 'Angry',
-//       };
-//       const emojis = Object.keys(emojiMap);
-//       const [selected, setSelected] = useState(null);
-      
-//   return (
-//     <View style={styles.mainContainer}>
-
-//       <View style={{overflow:'hidden',alignItems:'center',}}>
-//         <Image source={require('../../../assests/images/upper.png')} style={{resizeMode:'cover',width:'100%'}}/>
-//         <View style={{position:'absolute',top:Sizes.fixPadding * 2}}>
-//         <MyText title={'How Are You Feeling Today?'} textStyle={{fontSize:20,fontFamilt:'Poppins-Medium'}}/>   
-//         </View>
-      
-//       </View>
-
-//       <View style={{overflow:'hidden'}}>
-//         <Image source={require('../../../assests/images/lower.png')} style={{resizeMode:'cover',width:'100%'}}/>
-//       </View>
-//     </View>
-//   )
-// }
-
-// export default EmojiMoodSelector
-
-// const styles = StyleSheet.create({
-//     mainContainer:{
-//         backgroundColor:Colors.primaryTheme,
-//         borderWidth:1,
-//         borderColor:Colors.linecolor,
-//         borderRadius:Sizes.fixHorizontalPadding,
-//         marginVertical:Sizes.fixHorizontalPadding,
-//         overflow:'hidden'
-
-//     }
-// })
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React, { useState } from 'react';
 import { Colors, SCREEN_WIDTH, Sizes } from '../../../assests/style';
 import MyText from '../../../components/MyText';
 
-const EmojiMoodSelector = () => {
+const EmojiMoodSelector = ({emojidata}) => {
     const emojiMap = {
         '😌': 'Relaxed',
         '😢': 'Sad',
         '😃': 'Happy',
         '😡': 'Angry',
+        '😍': 'Loving',
+        '🤔': 'Thoughtful',
+        '😴': 'Sleepy',
+        '🤗': 'Excited',
+        '😎': 'Cool',
+        '😭': 'Crying',
+        '😆': 'Laughing',
+        '🤯': 'Mind Blown'
     };
+   
     const emojis = Object.keys(emojiMap);
     const [selected, setSelected] = useState(null);
 
@@ -70,13 +34,25 @@ const EmojiMoodSelector = () => {
             </View>
 
             {/* Emoji Selection */}
-            <View style={styles.emojiContainer}>
+            {/* <View style={styles.emojiContainer}>
                 {emojis.map((emoji, index) => (
                     <TouchableOpacity key={index} onPress={() => setSelected(emoji)} style={[styles.emojiButton, selected === emoji && styles.selectedEmoji]}>
                         <Text style={[styles.emoji, selected === emoji && styles.selectedSizeEmoji]}>{emoji}</Text>
                     </TouchableOpacity>
                 ))}
-            </View>
+            </View> */}
+                <FlatList
+                data={emojis}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                keyExtractor={(item, index) => index.toString()}
+                contentContainerStyle={styles.emojiContainer}
+                renderItem={({ item }) => (
+                    <TouchableOpacity onPress={() => setSelected(item)} style={[styles.emojiButton, selected === item && styles.selectedEmoji]}>
+                        <Text style={[styles.emoji, selected === item && styles.selectedSizeEmoji]}>{item}</Text>
+                    </TouchableOpacity>
+                )}
+            />
 
             {/* Selected Mood Display */}
             
@@ -113,6 +89,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         // marginVertical: 10,
+        // width:'100%',
+        alignSelf:'center'
     },
     emojiButton: {
         marginHorizontal: 10,

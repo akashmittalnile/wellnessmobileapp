@@ -40,3 +40,7 @@ export const changeUserPassword = payload => ({
   type: actionTypes.CHANGE_USER_PASSWORD,
   payload
 })
+export const updateProfileData = payload => ({
+  type: actionTypes.UPDATE_PROFILE_DATA,
+  payload
+})

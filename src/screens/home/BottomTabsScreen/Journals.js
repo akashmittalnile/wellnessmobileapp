@@ -1,4 +1,4 @@
-import { FlatList, Image, ImageBackground, StyleSheet, Text, View } from 'react-native'
+import { FlatList, Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { Colors, SCREEN_WIDTH, Sizes } from '../../../assests/style'
 import HomeHeader from '../components/HomeHeader'
@@ -10,6 +10,7 @@ import CustomSearchInput from '../../../components/CustomSearchInput'
 import Candle2 from '../../../assests/Svg/candle-2.svg'
 import EmotionalItem from './components/EmotionalItem'
 import CalendarLogo from '../../../assests/Svg/calendar.svg'
+import { navigate } from '../../../navigations/NavigationServices'
 
 
 const Journals = ({customerData}) => {
@@ -39,9 +40,11 @@ const Journals = ({customerData}) => {
   )
   function plusbutton() {
     return(
-      <View style={{backgroundColor:Colors.primaryTheme,height:SCREEN_WIDTH * 0.2,width:SCREEN_WIDTH * 0.2,borderRadius:100,position:'absolute',bottom:Sizes.fixPadding * 5,alignSelf:'flex-end',right:Sizes.fixPadding,justifyContent:'center',alignItems:'center'}}>
+      <TouchableOpacity style={{backgroundColor:Colors.primaryTheme,height:SCREEN_WIDTH * 0.2,width:SCREEN_WIDTH * 0.2,borderRadius:100,position:'absolute',bottom:Sizes.fixPadding * 5,alignSelf:'flex-end',right:Sizes.fixPadding,justifyContent:'center',alignItems:'center'}}
+      onPress={() => navigate('addjournal')}
+      >
         <Text style={{color:Colors.white,fontSize:60,fontWeight:'200',bottom:3}}>+</Text>
-      </View>
+      </TouchableOpacity>
     )
   }
   function journalData() {
@@ -160,14 +163,14 @@ const Journals = ({customerData}) => {
     )
   }
   function userInfo() {
-    const localImage = Image.resolveAssetSource(require('../../../assests/images/deleteImages/profileLogo.png')).uri;
+   
     return(
         <View style={styles.userinfo}>
             <View style={{flexDirection:'row',alignItems:'center'}}>
             <FastImage
         style={styles.image}
         source={{
-          uri: localImage, 
+          uri: customerData?.profile_photo,
           priority: FastImage.priority.high,
         }}
         resizeMode={FastImage.resizeMode.cover}

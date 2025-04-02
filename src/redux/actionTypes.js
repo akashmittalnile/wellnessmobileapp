@@ -1,6 +1,8 @@
 export const CLEAN_STORE = 'CLEAN_STORE'
 // common
 export const SET_IS_LOADING = 'SET_IS_LOADING'
+export const GET_SPLASH = 'GET_SPLASH'
+export const LOG_OUT_ACCOUNT = 'LOG_OUT_ACCOUNT'
 
 // auth part
 
@@ -15,3 +17,4 @@ export const VERIFY_EMAIL = 'VERIFY_EMAIL'
 export const SET_VERIFY_EMAIL = 'SET_VERIFY_EMAIL'
 export const VERIFY_OTP = 'VERIFY_OTP'
 export const CHANGE_USER_PASSWORD = 'CHANGE_USER_PASSWORD'
+export const UPDATE_PROFILE_DATA = 'UPDATE_PROFILE_DATA'

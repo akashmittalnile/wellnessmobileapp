@@ -8,3 +8,11 @@ export const setCustomerData = payload => ({
   type: actionTypes.SET_CUSTOMER_DATA,
   payload,
 });
+export const getSplash = payload => ({
+  type: actionTypes.GET_SPLASH,
+  payload,
+});
+export const logOutAccount = payload => ({
+  type: actionTypes.LOG_OUT_ACCOUNT,
+  payload,
+});

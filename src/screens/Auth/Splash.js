@@ -4,11 +4,13 @@ import LinearGradient from 'react-native-linear-gradient';
 import MyStatusBar from '../../components/StatusBar';
 import { Colors, SCREEN_HEIGHT, SCREEN_WIDTH } from '../../assests/style';
 import { resetToScreen } from '../../navigations/NavigationServices';
+import { connect } from 'react-redux';
+import * as Actions from '../../redux/actions/CommonActions'
 
-const Splash = () => {
+const Splash = ({dispatch}) => {
   useEffect(() => {
     const timer = setTimeout(() => {
-      resetToScreen('welcome'); 
+     dispatch(Actions.getSplash())
     }, 2000);
 
     return () => clearTimeout(timer);
@@ -40,8 +42,9 @@ const Splash = () => {
     )
   }
 };
+const mapDispatchToProps = dispatch => ({ dispatch })
 
-export default Splash;
+export default connect(null, mapDispatchToProps)(Splash)
 
 const styles = StyleSheet.create({
   container: {
