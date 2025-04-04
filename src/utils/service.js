@@ -101,7 +101,7 @@ export const getToken = async() => {
 //     return null;
 //   }
 // };
-export const imagePicker = async ({ type }) => {
+export const imagePicker = async ({ type, multiple = false }) => {
   try {
     const options = {
       mediaType: 'photo',
@@ -109,6 +109,7 @@ export const imagePicker = async ({ type }) => {
       aspect: [4, 3],
       quality: 0.5,
       base64: false,
+      selectionLimit: multiple ? 0 : 1,
     };
 
     // Function to launch the camera

@@ -3,6 +3,7 @@ export const CLEAN_STORE = 'CLEAN_STORE'
 export const SET_IS_LOADING = 'SET_IS_LOADING'
 export const GET_SPLASH = 'GET_SPLASH'
 export const LOG_OUT_ACCOUNT = 'LOG_OUT_ACCOUNT'
+export const SET_IS_REFRESHING = 'SET_IS_REFRESHING'
 
 // auth part
 
@@ -18,3 +19,15 @@ export const SET_VERIFY_EMAIL = 'SET_VERIFY_EMAIL'
 export const VERIFY_OTP = 'VERIFY_OTP'
 export const CHANGE_USER_PASSWORD = 'CHANGE_USER_PASSWORD'
 export const UPDATE_PROFILE_DATA = 'UPDATE_PROFILE_DATA'
+
+// Voice recognization
+
+export const START_LISTENING = 'START_LISTENING';
+export const STOP_LISTENING = 'STOP_LISTENING';
+export const SET_SPEECH_TEXT = 'SET_SPEECH_TEXT';
+
+// journal
+
+export const ADD_JOURNAL = 'ADD_JOURNAL';
+export const GET_JOURNAL_LIST = 'GET_JOURNAL_LIST';
+export const SET_JOURNAL_LIST = 'SET_JOURNAL_LIST';

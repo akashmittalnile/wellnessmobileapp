@@ -24,6 +24,7 @@ import TestTypes from '../screens/TestFile/TestTypes';
 import TestFrequency from '../screens/TestFile/TestFrequency';
 import RateUs from '../screens/termsandprivacy/RateUs';
 import AddJournal from '../screens/journal/AddJournal';
+import JournalDetailsScreen from '../screens/journal/JournalDetailsScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -86,7 +87,7 @@ const StackNavigation = () => {
 
       <Stack.Group>
         <Stack.Screen name="addjournal" component={AddJournal} />
-        
+        <Stack.Screen name="journalDetailsScreen" component={JournalDetailsScreen} />
       </Stack.Group>
 
 

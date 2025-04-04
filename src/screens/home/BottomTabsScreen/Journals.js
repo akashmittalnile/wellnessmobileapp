@@ -1,5 +1,5 @@
-import { FlatList, Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import { FlatList, Image, ImageBackground, RefreshControl, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import React, { useEffect } from 'react'
 import { Colors, SCREEN_WIDTH, Sizes } from '../../../assests/style'
 import HomeHeader from '../components/HomeHeader'
 import MyText from '../../../components/MyText'
@@ -11,9 +11,15 @@ import Candle2 from '../../../assests/Svg/candle-2.svg'
 import EmotionalItem from './components/EmotionalItem'
 import CalendarLogo from '../../../assests/Svg/calendar.svg'
 import { navigate } from '../../../navigations/NavigationServices'
+import * as JounalActions from '../../../redux/actions/JounalActions';
+import moment from 'moment'
 
 
-const Journals = ({customerData}) => {
+const Journals = ({dispatch,customerData,journalListData,isRefreshing}) => {
+ 
+  useEffect(() => {
+      dispatch(JounalActions.getJournalList());
+  },[dispatch])
   return (
     <ImageBackground 
     source={require('../../../assests/images/signinbackground.png')} 
@@ -31,8 +37,16 @@ const Journals = ({customerData}) => {
        {journalTitle()}
        {journalData()}
     </>
+    
   }
   contentContainerStyle={{ paddingBottom: 70,padding:Sizes.fixPadding }}
+  refreshControl={
+    <RefreshControl
+      refreshing={isRefreshing}
+      onRefresh={() => dispatch(JounalActions.getJournalList())
+      }
+    />
+  }
 />
 {plusbutton()}
 
@@ -97,26 +111,28 @@ const Journals = ({customerData}) => {
     ];
     const renderItem = ({item}) => {
       return(
-        <View style={styles.card}>
+        <TouchableOpacity style={styles.card}
+        onPress={() => navigate('journalDetailsScreen',item)}
+        >
         <View style={styles.header}>
           <View style={styles.row}>
             <Image source={{ uri: item?.emoji }} style={styles.emoji} />
-            <Text style={styles.title}>{item?.mood}</Text>
+            <Text style={styles.title}>{'Felling Happy'}</Text>
           </View>
           <View style={styles.row}>
             <CalendarLogo />
-            <Text style={styles.time}>{item?.date}</Text>
+            <Text style={styles.time}>{moment(item?.created_at).format('MM-DD-YYYY')}</Text>
           </View>
         </View>
         <Text style={styles.subtitle}>{item?.title}</Text>
-        <Text style={styles.description}>{item?.description}</Text>
-      </View>
+        <Text style={styles.description}>{item?.notes}</Text>
+      </TouchableOpacity >
       )
     }
     return(
       <View>
          <FlatList
-      data={posts}
+      data={journalListData?.journals}
       renderItem={renderItem}
       // contentContainerStyle={styles.list}
     />
@@ -193,6 +209,8 @@ const Journals = ({customerData}) => {
 }
 const mapStateToProps = state => ({
   customerData: state.common.customerData,
+  journalListData: state.journalReducer.journalListData,
+  isRefreshing: state.common.isRefreshing,
 });
 
 const mapDispatchToProps = dispatch => ({ dispatch });

@@ -16,3 +16,7 @@ export const logOutAccount = payload => ({
   type: actionTypes.LOG_OUT_ACCOUNT,
   payload,
 });
+export const setIsRefreshing = payload => ({
+  type: actionTypes.SET_IS_REFRESHING,
+  payload,
+})

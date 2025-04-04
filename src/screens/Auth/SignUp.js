@@ -123,9 +123,9 @@ const SignUp = ({ phoneNumberCountryCode, dispatch }) => {
       } else if (!emailRegex.test(email)) {
         showToastMessage({ message: 'Please enter valid email id.' });
       } else if (password === '') {
-        showToastMessage({ message: 'Please select your address.' });
+        showToastMessage({ message: 'Please enter Password.' });
       } else if (confirmPassword === '') {
-        showToastMessage({ message: 'Please check terms and conditions.' });
+        showToastMessage({ message: 'Please Enter Confirm password.' });
       } else {
         const payload = [
           { name: 'fullname', data: name },

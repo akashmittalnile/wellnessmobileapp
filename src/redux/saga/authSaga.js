@@ -184,7 +184,7 @@ function* updateProfileData(actions) {
         if (response?.status) {
             yield put({ type: actionTypes.SET_CUSTOMER_DATA, payload: response?.user })
             showToastMessage({ message: response?.message })
-            yield call(resetToScreen('home'))
+            navigate('home', { screen: 'drawer', params: { screen: 'profileTab' } });
         } else {
             showToastMessage({ message: response?.message })
             

@@ -7,7 +7,11 @@ import Toast from 'react-native-toast-message'
 import LogOutModal from './src/screens/Auth/components/LogOutModal'
 import Loader from './src/components/Loader'
 
+
+
+
 const App = () => {
+
 
   return (
     
